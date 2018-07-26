@@ -3,31 +3,35 @@ var dsl = new DSL();
 var count = "";
 var codes = Array();
 
-// Display Editor code
+
+/**
+* Handles the initial view
+*  @param{Object}req
+*  @param{Object}res
+*/
 exports.code_view = function(req, res) {
     res.render('edit_template', {title: "SoSA Editor"});
 };
 
-// Handle Editor code
+/**
+*  Function to create a list from the code to present back
+*  to the UI. Handles the storing of the code in an object
+*  @param{Object}req
+*  @param{Object}res
+*/
 exports.code_edit = function(req, res) {
     title = "SoSA Editor";
     storecode(req.body.son);
     count = codes.join("\n");
     res.render('edit_template', {code:count, title:title});
 };
+
+/**
+*  Method to add the new operation into memory
+*  and to also hand off to the DSL code
+*  @param{string}
+*/
 storecode = function(newline) {
     codes.push(newline);
-    console.log(JSON.stringify(codes));
-    runcode()
-}
-
-runcode = function() {
-    let tmpcodes = codes;
-    for (let i in tmpcodes) {
-        let tmp = tmpcodes[i].split(':');
-        console.log('tmp ' + tmp);
-        if (tmp[0] == "get") {
-          dsl.get(tmp[1]);
-        }
-    }
+    dsl.runcode(codes);
 }
