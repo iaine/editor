@@ -3,15 +3,7 @@ var dsl = new DSL();
 var count = "";
 var codes = Array();
 
-
-/**
-* Handles the initial view
-*  @param{Object}req
-*  @param{Object}res
-*/
-exports.code_view = function(req, res) {
-    res.render('edit_template', {title: "SoSA Editor"});
-};
+const title = "Prototype editor";
 
 /**
 *  Function to create a list from the code to present back
@@ -20,9 +12,9 @@ exports.code_view = function(req, res) {
 *  @param{Object}res
 */
 exports.code_edit = function(req, res) {
-    title = "SoSA Editor";
+    //title = "SoSA Editor";
     storecode(req.body.son);
-    count = codes.join("\n");
+    count = (codes.length > 0) ? codes.join("\n") : "";
     res.render('edit_template', {code:count, title:title});
 };
 
@@ -32,6 +24,10 @@ exports.code_edit = function(req, res) {
 *  @param{string}
 */
 storecode = function(newline) {
+   try {
     codes.push(newline);
     dsl.runcode(codes);
+   } catch (err) {
+     console.log("Error: " + err);
+   }
 }
