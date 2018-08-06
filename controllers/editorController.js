@@ -1,4 +1,4 @@
-var DSL = require("../dsl.js").DSL;
+var DSL = require("../dsl/dsl.js").DSL;
 var dsl = new DSL();
 var FileOps = require("../fileops.js").FileOps;
 var fo = new FileOps();
@@ -27,7 +27,7 @@ exports.code_edit = function(req, res) {
 storecode = function(newline) {
    try {
     codes.push(newline);
-    fo.Write(codes);
+    //fo.Write(codes);
     dsl.runcode(codes);
     
    } catch (err) {
