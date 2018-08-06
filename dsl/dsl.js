@@ -1,6 +1,8 @@
 /**
  *  DSL prototype
  */
+var config = require('../config.json');
+var fs = require('fs');
 
 var DSL = function () {};
 
@@ -32,6 +34,13 @@ DSL.prototype.get = function(ftype, str) {
 
 DSL.prototype.getTxt = function(fname) {
   console.log('in text');
+  fs.readFile(config['data'] + fname,'r', function(err, data) {
+    if (err) console.log("File error: " + err);
+       //add data to the array
+       this.data.push(data);
+       console.log("data ");
+       console.log(this.data);
+  });
 }
 
 exports.DSL = DSL;
