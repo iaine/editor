@@ -6,17 +6,23 @@ var fs = require('fs');
 
 var DSL = function () {};
 
+var datum = [];
+
 DSL.prototype.init = function() {
-  this.data = [];
+  datum = [];
 }
 
 DSL.prototype.runcode = function(codes) {
     
     for (let i in codes) {
-        let tmp = codes[i].split(':');
-        console.log('tmp ' + tmp);
-        let args= tmp[1].substring(1,(tmp[1].length-1)).split(',');
-        this[tmp[0]].apply(this, args);
+        console.log("codes :")
+        console.log(codes)
+        if(codes[i]) {
+          let tmp = codes[i].split(':');
+          console.log('tmp ' + tmp);
+          let args= tmp[1].substring(1,(tmp[1].length-1)).split(',');
+          this[tmp[0]].apply(this, args);
+        }
     }
 }
 
@@ -25,21 +31,21 @@ DSL.prototype.get = function(ftype, str) {
   switch(ftype) {
     case 'text':
     case 'txt':
-      this.data = this.getTxt(str);
+      this.data = this.getTxt(datum, str);
       break;
     default:
       console.log('Operation not handled')
   }
 }
 
-DSL.prototype.getTxt = function(fname) {
+DSL.prototype.getTxt = function(datum, fname) {
   console.log('in text');
-  fs.readFile(config['data'] + fname,'r', function(err, data) {
+  fs.readFile(config['data'] +'/' + fname.trim(),{flag:'r'}, function(err, data) {
     if (err) console.log("File error: " + err);
        //add data to the array
-       this.data.push(data);
+       datum.push(data);
        console.log("data ");
-       console.log(this.data);
+       console.log(data);
   });
 }
 
