@@ -9,6 +9,7 @@ block content
     div.form-group
       label(for='name') Write Code:
       input#son.form-control(type='textarea', placeholder='Edit code' name='son' value=(""))
+      input#son.form-control(type='hidden',  name='sessid' value=(id))
     button.btn.btn-primary(type='submit') Submit
 
   p #{code}

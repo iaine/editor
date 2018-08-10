@@ -2,6 +2,8 @@ var DSL = require("../dsl/dsl.js").DSL;
 var dsl = new DSL();
 var FileOps = require("../fileops.js").FileOps;
 var fo = new FileOps();
+const uuidv1 = require('uuid/v1');
+
 var codes = Array();
 
 const title = "Prototype editor";
@@ -16,7 +18,8 @@ exports.code_edit = function(req, res) {
     //title = "SoSA Editor";
     storecode(req.body.son);
     let count = (codes.length > 0) ? codes.join("\n") : "";
-    res.render('edit_template', {code:count, title:title});
+    let _id = (req.body.id) ? req.body.id : uuidv1();
+    res.render('edit_template', {code:count, title:title,id:_id});
 };
 
 /**
